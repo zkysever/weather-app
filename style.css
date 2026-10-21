@@ -107,7 +107,7 @@ h2{
 .forecast{
     margin-bottom:16px;
 }
-.forecast-list{
+.forecast-cards{
     display:grid;
     grid-template-columns: repeat(3,1fr);
     gap:12px;
@@ -158,7 +158,7 @@ h2{
     color:#2563eb;
 }
 @media (max-width: 520px) {
-  .forecast-list {
+  .forecast-cards {
     grid-template-columns: 1fr;
   }
   .search-form {
