@@ -1,0 +1,175 @@
+*,
+*::before,
+*::after{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+body{
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,san-serif;
+    background:linear-gradient(160deg,#eef4ff,#f8fbff);
+    color:#1f2937;
+    min-height:100vh;
+    padding:24px 16px;
+}
+[hidden] {
+  display: none !important;
+}
+.app{
+    width:min(720px,100%);
+    margin:0 auto;
+}
+h1{
+    font-size:1.6rem;
+    margin-bottom:20px;
+}
+h2{
+    font-size:1.1rem;
+    margin-bottom:12px;
+}
+.search-form{
+    display:flex;
+    gap:10px;
+    margin-bottom:12px;
+}
+#city-input{
+    flex:1;
+    min-width:0;
+    padding:12px 14px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    font-size:1rem;
+    outline:none;
+}
+#city-input:focus{
+    border-color:#3b82f6;
+    box-shadow:0 0 0 3px rgba(59,130,246,0.15);
+}
+#search-btn{
+    padding:12px 22px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:#fff;
+    font-size:1rem;
+    cursor:pointer;
+    white-space:nowrap;
+}
+#search-btn:hover{
+    background:#1d4ed8;
+}
+#search-btn:disabled{
+    background: #cbd5e1;
+    color: #475569;
+    cursor: not-allowed;
+}
+#search-btn:focus-visible,
+.recent-btn:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+.status-message{
+    min-height:24px;
+    font-size:0.9rem;
+    color:#64748b;
+    margin-bottom:16px;
+}
+.status-message.error{
+    color:#dc2626;
+}
+.card{
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:16px;
+    padding: 20px;
+    margin-bottom:16px;
+    box-shadow:0 8px 24px rgba(15,23,42,0.05);
+}
+.current-weather h2 {
+  margin-bottom: 16px;
+}
+
+.current-main{
+    display:flex;
+    align-items:baseline;
+    gap:20px;
+    flex-wrap:wrap;
+}
+#current-temp{
+    font-size:clamp(2.4rem,8vw,3.8rem);
+    font-weight:700;
+    line-height:1;
+}
+#current-wind{
+    font-size:1rem;
+    color:#475569;
+}
+.forecast{
+    margin-bottom:16px;
+}
+.forecast-list{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    gap:12px;
+}
+.forecast-item{
+    background:#fff;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+    padding:14px;
+    text-align:center;
+}
+.forecast-date{
+    font-size:0.85rem;
+    color:#64748b;
+    margin-bottom:8px;
+}
+.forecast-temp{
+    font-size:1.1rem;
+    font-weight:600;
+}
+.forecast-temp .max{
+    color:#dc2626;
+}
+.forecast-temp .min{
+    color:#2563eb;
+    margin-left:6px;
+}
+.forecast-desc {
+  margin-top: 6px;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+.recent-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+.recent-btn{
+    padding:8px 14px;
+    border:1px solid #cbd5e1;
+    border-radius:999px;
+    background:#f8fafc;
+    font-size:0.9rem;
+    cursor:pointer;
+}
+.recent-btn:hover{
+    border-color:#3b82f6;
+    color:#2563eb;
+}
+@media (max-width: 520px) {
+  .forecast-list {
+    grid-template-columns: 1fr;
+  }
+  .search-form {
+    flex-direction: column;
+  }
+   #city-input {
+    flex: none;
+    width: 100%;
+  }
+
+  #search-btn {
+    width: 100%;
+  }
+}

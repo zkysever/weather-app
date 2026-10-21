@@ -4,22 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>天气查询</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main class="app">
         <h1>天气查询</h1>
-        <form id="search-form""class="search-form>
+        <form id="search-form" class="search-form">
             <input
             id="city-input"
             type="text"
             placeholder="请输入城市名称, 例如：北京"
-            autoComplete="off"
+            autocomplete="off"
             >
             <button id="search-btn" type="submit">查询</button>
         </form>
-        <p id="status-message" class="status-message"role="status"></p>
-        <section id="current-weather"class="card current-weather"hidden>
+        <p id="status-message" class="status-message" role="status"></p>
+        <section id="current-weather" class="card current-weather" hidden>
             <h2 id="current-city"></h2>
             <div class="current-main">
                 <span id="current-temp"></span>
@@ -28,13 +28,12 @@
         </section>
         <section id="forecast" class="card forecast" hidden>
             <h2>未来三天天气预报</h2>
-            <div id="forecast-cards" class="forecast-cards"></div>
+            <div id="forecast-cards" class="forecast-list"></div>
         </section>
-    </main>
-    <section id="recent-section"class="card recent-section"hidden>
-        <h2>最近查询</h2>
-        <div id="recent-list"class"recent-list"></div>
-    </section>
+        <section id="recent-section" class="card recent-section" hidden>
+            <h2>最近查询</h2>
+            <div id="recent-list" class="recent-list"></div>
+        </section>
     </main>
     <script src="app.js"></script>
 </body>
