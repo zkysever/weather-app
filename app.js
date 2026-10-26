@@ -37,9 +37,10 @@ function renderForecast(days) {
                 <span class="max">${Math.round(day.max)}°</span>
                 <span class="min">${Math.round(day.min)}°</span>
             </div>
+            <div class="forecast-desc">${day.desc || ''}</div>
             `;
         forecastCards.appendChild(item);
-    }   );
+    });
     forecast.hidden = false;
 }
 
@@ -58,11 +59,24 @@ searchForm.addEventListener('submit', async (event) => {
     setStatus('正在获取天气数据...');
     try{
         const location = await fetchWeatherData(city);
-        console.log('坐标结果:', location);
-        setStatus(`已找到 ${location.name} （纬度: ${location.latitude}, 经度: ${location.longitude}）`);
-    } catch (error) {
+        setStatus('正在获取天气信息...');
+        const weather = await fetchWeather(location.latitude, location.longitude);
+        renderCurrentWeather({
+            city: location.name,
+            temperature: weather.current.temperature_2m,
+            windspeed: weather.current.wind_speed_10m,
+        });
+        const days = weather.daily.time.map((date, index) => ({
+            date:['今天', '明天', '后天'][index] || date.slice(5),
+            max: weather.daily.temperature_2m_max[index],
+            min: weather.daily.temperature_2m_min[index],
+            desc: weatherText(weather.daily.weather_code[index]),
+        }));
+        renderForecast(days);
+        setStatus(`天气数据获取成功: ${location.name}`);
+    }   catch(error){
         setStatus(friendlyError(error), true);
-    } finally {
+    }   finally{
         searchBtn.disabled = false;
     }
 });
@@ -83,3 +97,32 @@ async function fetchWeatherData(city) {
         longitude: result.longitude,
     };
 }
+async function fetchWeather(latitude, longitude) {
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}`+
+    `&current=temperature_2m,wind_speed_10m,weather_code`+
+    `&daily=temperature_2m_max,temperature_2m_min,weather_code`+
+    `&timezone=auto&forecast_days=3`;
+    const response = await fetch(url);
+    if(!response.ok){
+        throw new Error(`天气数据请求失败：HTTP ${response.status}`);
+    }
+    const data = await response.json();
+    if(!data.current || !data.daily){
+        throw new Error('天气数据格式异常，请稍后再试');
+    }
+    return data;
+}
+const WEATHER_TEXT = {
+  0: '晴', 1: '晴间多云', 2: '多云', 3: '阴',
+  45: '雾', 48: '雾凇',
+  51: '毛毛雨', 53: '毛毛雨', 55: '毛毛雨',
+  56: '冻雨', 57: '冻雨',
+  61: '小雨', 63: '中雨', 65: '大雨',
+  66: '冻雨', 67: '冻雨',
+  71: '小雪', 73: '中雪', 75: '大雪',
+  77: '雪粒',
+  80: '阵雨', 81: '阵雨', 82: '强阵雨',
+  85: '阵雪', 86: '强阵雪',
+  95: '雷阵雨', 96: '雷阵雨伴冰雹', 99: '强雷暴伴冰雹',
+};
+const weatherText = (code) => WEATHER_TEXT[code] ?? '未知';
